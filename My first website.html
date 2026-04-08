@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow Beauty Store</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: #ff5e5e;
+  color: #333;
+}
+
+/* HEADER */
+header {
+  position: relative;
+  background: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9') center/cover no-repeat;
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+header h1, header p {
+  position: relative;
+  z-index: 2;
+}
+
+header h1 { font-size: 3rem; margin-bottom: 10px; }
+header p { font-size: 1.3rem; }
+
+/* PRODUCTS */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 30px;
+}
+
+.card {
+  background: #fff;
+  width: 250px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.card h2 { margin-bottom: 10px; }
+.price {
+  color: #ff5e5e;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.desc {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+/* BUTTONS */
+button, .order-btn {
+  display: inline-block;
+  background: linear-gradient(45deg, #ff7e5f, #feb47b);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 5px;
+  text-decoration: none;
+}
+
+button:hover, .order-btn:hover {
+  opacity: 0.8;
+}
+
+/* CART */
+#cart {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 250px;
+}
+
+#cart-total {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+/* REVIEWS */
+.reviews {
+  background: #fff0f0;
+  padding: 40px;
+  text-align: center;
+}
+
+.review-card {
+  background: white;
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 300px;
+}
+
+/* FOOTER */
+footer {
+  background: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+@media(max-width:768px){
+  .products { flex-direction: column; align-items: center; }
+  #cart { position: static; margin: 20px auto; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Glow Beauty Store</h1>
+<p>Premium Hair & Beauty Products</p>
+</header>
+
+<section class="products">
+
+<div class="card" data-name="Brazilian Wig" data-price="45000">
+<img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30">
+<h2>Brazilian Wig</h2>
+<p class="price">₦45,000</p>
+<p class="desc">Soft, natural-looking wig for all occasions.</p>
+<button class="add-cart">Add to Cart</button>
+<a href="https://wa.me/2347088144839?text=Hello%20%F0%9F%91%8B%0A%0AYour%20order%20has%20been%20received.%0A%0ATotal:%20%E2%82%A6____%0A%0APlease%20make%20payment%20to:%0ABank:%20Opay%20/%20PalmPay%20/%20GTBank%0AAccount%20Number:%20XXXXXXXX%0A%0ASend%20screenshot%20after%20payment%20%E2%9C%85"
+class="order-btn">Buy Now</a>
+</div>
+
+<div class="card" data-name="Perfume" data-price="10000">
+<img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=500&q=80"
+     alt="Perfume"
+     onerror="this.src='https://via.placeholder.com/300';">
+<h2>Perfume</h2>
+<p class="price">₦10,000</p>
+<p class="desc">Long-lasting fragrance.</p>
+<button class="add-cart">Add to Cart</button>
+<a href="https://wa.me/2347088144839?text=Hello%20%F0%9F%91%8B%0A%0AYour%20order%20has%20been%20received.%0A%0ATotal:%20%E2%82%A6____%0A%0APlease%20make%20payment%20to:%0ABank:%20Opay%20/%20PalmPay%20/%20GTBank%0AAccount%20Number:%20XXXXXXXX%0A%0ASend%20screenshot%20after%20payment%20%E2%9C%85"
+class="order-btn">Buy Now</a>
+</div>
+
+<div class="card" data-name="Hair Oil" data-price="5000">
+<img src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc">
+<h2>Hair Oil</h2>
+<p class="price">₦5,000</p>
+<p class="desc">For healthy and shiny hair.</p>
+<button class="add-cart">Add to Cart</button>
+<a href="https://wa.me/2347088144839?text=Hello%20%F0%9F%91%8B%0A%0AYour%20order%20has%20been%20received.%0A%0ATotal:%20%E2%82%A6____%0A%0APlease%20make%20payment%20to:%0ABank:%20Opay%20/%20PalmPay%20/%20GTBank%0AAccount%20Number:%20XXXXXXXX%0A%0ASend%20screenshot%20after%20payment%20%E2%9C%85"
+class="order-btn">Buy Now</a>
+</div>
+
+</section>
+
+<div id="cart">
+<h3>Your Cart</h3>
+<div id="cart-items">No items added.</div>
+<div id="cart-total"></div>
+<a herf =https://wa.me/2347088144839?text=Hello%20%F0%9F%91%8B%0A%0AYour%20order%20has%20been%20received.%0A%0ATotal:%20%E2%82%A6____%0A%0APlease%20make%20payment%20to:%0ABank:%20Opay%20/%20PalmPay%20/%20GTBank%0AAccount%20Number:%20XXXXXXXX%0A%0ASend%20screenshot%20after%20payment%20%E2%9C%85 class="order-btn">Order on WhatsApp</a>
+</div>
+
+<section class="reviews">
+<h2>Customer Reviews</h2>
+
+<div class="review-card">"Amazing quality!" – Aisha</div>
+<div class="review-card">"Smells great!" – Chioma</div>
+<div class="review-card">"My hair is healthier!" – Emeka</div>
+
+</section>
+
+<footer>
+<p>WhatsApp: 07088144839</p>
+<p>Lagos, Nigeria</p>
+<p>&copy; 2026 Glow Beauty Store</p>
+</footer>
+
+<script>
+let cart = [];
+
+document.querySelectorAll('.add-cart').forEach(btn => {
+  btn.onclick = () => {
+    const card = btn.parentElement;
+    const name = card.dataset.name;
+    const price = Number(card.dataset.price);
+    cart.push({name, price});
+    updateCart();
+  };
+});
+
+function updateCart(){
+  const items = document.getElementById('cart-items');
+  const totalEl = document.getElementById('cart-total');
+  const btn = document.getElementById('whatsapp-order');
+
+  if(cart.length === 0){
+    items.innerHTML = "No items added.";
+    totalEl.innerHTML = "";
+    btn.style.display = "none";
+    return;
+  }
+
+  items.innerHTML = cart.map(i => `${i.name} - ₦${i.price}`).join("<br>");
+
+  const total = cart.reduce((a,b)=>a+b.price,0);
+  totalEl.innerHTML = "Total: ₦" + total;
+
+  const message = "Hello, I want to order:%0A" +
+    cart.map(i => `- ${i.name} (₦${i.price})`).join('%0A') +
+    `%0ATotal: ₦${total}`;
+
+  btn.href = `https://wa.me/2347088144839?text=${message}`;
+  btn.style.display = "block";
+}
+</script>
+
+</body>
+</html>
