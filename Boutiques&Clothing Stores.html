@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Boutique</title>
+<style>
+  body {font-family: Arial, sans-serif; margin:0; background:#f8f8f8; color:#333;}
+  header {background:#000; color:#fff; padding:20px; text-align:center; position: sticky; top:0; z-index:100;}
+  header h1 {margin:0;}
+  nav {background:#111; display:flex; justify-content:center; gap:20px; padding:10px 0;}
+  nav a {color:#fff; text-decoration:none; font-weight:bold;}
+  nav a#cart-button {cursor:pointer;}
+  .hero {background:url('https://images.unsplash.com/photo-1521335629791-ce4aec67dd45?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat; height:400px; display:flex; align-items:center; justify-content:center; color:#fff; text-shadow:2px 2px 8px #000;}
+  .hero h2 {font-size:3em;}
+  section {padding:60px 20px; max-width:1200px; margin:auto;}
+  h2 {text-align:center; margin-bottom:40px;}
+  .product-list {display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px;}
+  .product {background:#fff; padding:15px; border-radius:10px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition:transform 0.3s;}
+  .product:hover {transform:translateY(-5px);}
+  .product img {width:100%; border-radius:10px;}
+  .product button {margin-top:10px; padding:10px 15px; border:none; background:#000; color:#fff; cursor:pointer; border-radius:5px;}
+  .contact form {max-width:600px; margin:auto; display:flex; flex-direction:column; gap:15px;}
+  .contact input, .contact textarea {padding:10px; border-radius:5px; border:1px solid #ccc; font-size:1em;}
+  .contact button {padding:15px; background:#000; color:#fff; border:none; cursor:pointer; font-size:1.1em; border-radius:5px;}
+  footer {text-align:center; padding:20px; background:#111; color:#fff;}
+
+  /* Modal styles */
+  .modal {display:none; position:fixed; z-index:200; left:0; top:0; width:100%; height:100%; overflow:auto; background:rgba(0,0,0,0.6);}
+  .modal-content {background:#fff; margin:10% auto; padding:20px; border-radius:10px; max-width:500px; position:relative; animation:fadeIn 0.3s;}
+  .close {position:absolute; top:10px; right:15px; font-size:25px; cursor:pointer;}
+  .cart-item {display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;}
+  .cart-item span {margin:0 5px;}
+  .cart-item input {width:50px; padding:5px;}
+  @keyframes fadeIn {from{opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);}}
+  button#checkout {padding:10px 20px; background:#000; color:#fff; border:none; cursor:pointer; border-radius:5px; width:100%;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Fashion Boutique</h1>
+</header>
+
+<nav>
+  <a href="#products">Products</a>
+  <a id="cart-button">Cart 🛒</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section class="hero">
+  <h2>Trendy Styles for Every Occasion</h2>
+</section>
+
+<section id="products">
+  <h2>Our Collection</h2>
+  <div class="product-list">
+    <div class="product" data-name="Elegant Dress" data-price="120">
+      <img src="https://images.unsplash.com/photo-1580906852956-f2e128a184f1?auto=format&fit=crop&w=600&q=80" alt="Dress">
+      <h3>Elegant Dress</h3>
+      <p>$120</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Stylish Jacket" data-price="95">
+      <img src="https://images.unsplash.com/photo-1618354690557-2f0d6f14bbf3?auto=format&fit=crop&w=600&q=80" alt="Jacket">
+      <h3>Stylish Jacket</h3>
+      <p>$95</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Chic Accessories" data-price="45">
+      <img src="https://images.unsplash.com/photo-1592878890436-7ce7c60a3d68?auto=format&fit=crop&w=600&q=80" alt="Accessories">
+      <h3>Chic Accessories</h3>
+      <p>$45</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="cart-modal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="close-cart">&times;</span>
+    <h2>Your Cart</h2>
+    <div id="cart-items">Cart is empty</div>
+    <button id="checkout">Checkout</button>
+  </div>
+</div>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p style="text-align:center; max-width:800px; margin:auto;">
+    Fashion Boutique brings the latest trends in clothing and accessories directly to you. Elegant, comfortable, and stylish — we make fashion easy for everyone.
+  </p>
+</section>
+
+<section id="contact" class="contact">
+  <h2>Contact Us</h2>
+  <form onsubmit="alert('Thank you! Your message was sent.'); return false;">
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Your Email" required>
+    <textarea placeholder="Your Message" rows="5" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<footer>
+  &copy; 2026 Fashion Boutique. All rights reserved.
+</footer>
+
+<script>
+let cartItems = [];
+
+// Add to cart
+function addToCart(button) {
+  const product = button.parentElement;
+  const name = product.dataset.name;
+  const price = parseFloat(product.dataset.price);
+
+  const existing = cartItems.find(item => item.name === name);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cartItems.push({name, price, qty:1});
+  }
+  openCart();
+  renderCart();
+}
+
+// Remove from cart
+function removeFromCart(name) {
+  cartItems = cartItems.filter(item => item.name !== name);
+  renderCart();
+}
+
+// Update quantity
+function updateQty(name, qty) {
+  const item = cartItems.find(i=>i.name===name);
+  if(item){
+    item.qty = qty;
+    if(item.qty <=0) removeFromCart(name);
+  }
+  renderCart();
+}
+
+// Render cart modal
+function renderCart() {
+  const container = document.getElementById('cart-items');
+  if(cartItems.length ===0){
+    container.innerHTML = 'Cart is empty';
+    return;
+  }
+  let html='';
+  let total=0;
+  cartItems.forEach(item=>{
+    total += item.price * item.qty;
+    html += `<div class="cart-item">
+      <span>${item.name}</span>
+      <input type="number" value="${item.qty}" min="1" onchange="updateQty('${item.name}', this.value)">
+      <span>$${(item.price*item.qty).toFixed(2)}</span>
+      <button onclick="removeFromCart('${item.name}')">Remove</button>
+    </div>`;
+  });
+  html += `<h3>Total: $${total.toFixed(2)}</h3>`;
+  container.innerHTML = html;
+}
+
+// Checkout
+document.getElementById('checkout').onclick = function(){
+  if(cartItems.length===0){alert('Cart is empty!'); return;}
+  alert('Thank you for your purchase! Total: $'+cartItems.reduce((a,b)=>a+b.price*b.qty,0).toFixed(2));
+  cartItems=[];
+  renderCart();
+  closeCart();
+}
+
+// Modal open/close
+const modal = document.getElementById('cart-modal');
+document.getElementById('cart-button').onclick = openCart;
+document.getElementById('close-cart').onclick = closeCart;
+window.onclick = function(event){ if(event.target===modal) closeCart(); }
+
+function openCart(){ modal.style.display='block'; renderCart();}
+function closeCart(){ modal.style.display='none';}
+</script>
+
+</body>
+</html>
